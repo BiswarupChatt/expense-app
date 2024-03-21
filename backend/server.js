@@ -88,7 +88,27 @@ app.get('/category/:id', checkSchema(idValidationSchema), (req, res) => {
         })
 })
 
-// app.put()
+app.put('/category/:id', checkSchema(categorySchemaValidation), (req, res) => {
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+        return res.status(400).json({ error: error.array() })
+    }
+
+    const id = req.params.id
+    const body = req.body
+
+    Category.findByIdAndUpdate(id, body,{new: true})
+    .then((response)=>{
+        if(!response){
+            res.status(404).json({})
+        } else{
+            res.status(201).json(response)
+        }
+    })
+    .catch((err)=>{
+        res.status(500).json({errors:'Internal Server Error'})
+    })
+})
 
 // app.delete()
 
