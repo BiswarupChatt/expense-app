@@ -1,11 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const { checkSchema, validationResult } = require('express-validator')
 const app = express()
 const port = 3066
 
 app.use(express.json())
-
+app.use(cors())
 mongoose.connect('mongodb://127.0.0.1:27017/expense-app-project')
     .then(() => {
         console.log(`DataBase '/expense-app-project' is running `)
